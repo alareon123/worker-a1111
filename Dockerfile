@@ -86,7 +86,7 @@ RUN apk add --no-cache wget && \
 # Download Dissolve Style LoRA (https://civitai.com/models/245889)
 RUN apk add --no-cache wget && \
     wget -q -O /lora/dissolve_style.safetensors https://civitai.com/api/download/models/314246?type=Model&format=SafeTensor
-    
+
 # Download Fractal Geometry LoRA (https://civitai.com/models/269592)
 RUN apk add --no-cache wget && \
     wget -q -O /lora/fractal_geometry.safetensors https://civitai.com/api/download/models/314363?type=Model&format=SafeTensor
@@ -137,8 +137,12 @@ RUN export TORCH_COMMAND='pip install --pre torch torchvision torchaudio --extra
 
 RUN apt-get update && \
     apt install -y \
+    build-essential \
+    python3-dev \
+    gcc \
     fonts-dejavu-core rsync git jq moreutils aria2 wget libgoogle-perftools-dev procps libgl1 libglib2.0-0 && \
     apt-get autoremove -y && rm -rf /var/lib/apt/lists/* && apt-get clean -y
+
 
 RUN --mount=type=cache,target=/cache --mount=type=cache,target=/root/.cache/pip \
     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
